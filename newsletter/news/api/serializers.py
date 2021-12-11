@@ -33,3 +33,15 @@ class ArticleSerializer(serializers.Serializer):
         instance.is_active = validated_data.get('is_active', instance.is_active)
         instance.save()
         return instance
+    
+    def validate(self, data): # object level validation olduğu için dönen datayı kontrol ediyoruz
+        # datamızda dictionary olduğu için aşağıdaki gibi ulaşabiliyorduk
+        if data['headline'] == data['description']:
+            raise serializers.ValidationError('Headline and description fields cannot be same')
+        return data
+    # fakat burda sadece field yani headline'ı çek ettiğimiz için valueyu almamız gerekir
+    # field level validation
+    def validate_description(self, value):
+        if len(value) < 20:
+            raise serializers.ValidationError(f'The description must be at least 20 characters bu given {len(value)} charecter')
+        return value
