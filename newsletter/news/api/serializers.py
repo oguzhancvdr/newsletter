@@ -1,7 +1,39 @@
 from rest_framework import serializers
 from news.models import Article
 
-class ArticleSerializer(serializers.Serializer):
+from datetime import datetime, date
+from django.utils.timesince import timesince
+class ArticleSerializer(serializers.ModelSerializer):
+    # burda kullanıcının postu yayınladığı andan itibaren geçtiği süreyi
+    # hesaplayıp cliente dönelim
+    # methodumuzu tanımlıyoruz
+    time_since_pub = serializers.SerializerMethodField()
+    class Meta:
+        model = Article
+        read_only_fields = ['id', 'created_at', 'modified_at']
+        fields = '__all__'
+
+    # put prefix get_ your defined SerializerMethodFiedl()
+    # we need to send object to our model to be able to create time_since_pub field and its value
+    # our method
+    def get_time_since_pub(self, object):
+        now = datetime.now()
+        pub_date = object.pub_date
+        if object.is_active:
+            time_delta = timesince(pub_date, now)
+            return time_delta
+        else:
+            return 'Not Active'
+
+    def validate_pub_date(self, value):
+        today = date.today()
+        if value > today:
+            raise serializers.ValidationError('Publish date cannot be a further date!')
+        return value
+        
+
+# Standart Serializer
+class ArticleDefaultSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     author = serializers.CharField()
     headline = serializers.CharField()
