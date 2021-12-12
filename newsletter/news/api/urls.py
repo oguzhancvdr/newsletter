@@ -6,6 +6,7 @@ from news.api import views as api_views
 urlpatterns = [
   # our api will looks like /api/articles/
   # class based views
+  path('authors/', api_views.ReporterListCreateView.as_view(), name="author-list"),
   path('articles/', api_views.ArticleListCreateView.as_view(), name="article-list"),
   path('articles/<int:pk>', api_views.ArticleDetailAPIView.as_view(), name="article-detail"),
   # function based views
