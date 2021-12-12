@@ -2,9 +2,18 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 
+class Reporter(models.Model):
+    first_name = models.CharField(verbose_name=_('name'), max_length=120)
+    last_name = models.CharField(verbose_name=_('surname'), max_length=120)
+    bio = models.TextField(verbose_name=_('biography'), blank=True, null=True)
 
-class Article(models.Model):
-    author = models.CharField(max_length=150, verbose_name=_('author'))
+    def __str__(self):
+      return f"{self.first_name} {self.last_name}"
+
+
+
+class Article(models.Model):  
+    author = models.ForeignKey(Reporter, max_length=150, verbose_name=_('author'), on_delete=models.PROTECT)
     headline = models.CharField(max_length=120, verbose_name=_('headline'))
     description = models.CharField(max_length=200, verbose_name=_('description'))
     content = models.TextField(verbose_name=_('content'))
@@ -19,4 +28,4 @@ class Article(models.Model):
       verbose_name_plural = _("articles")
 
     def __str__(self):
-      return self.headline
+      return f'{self.author.first_name} - {self.headline}'
