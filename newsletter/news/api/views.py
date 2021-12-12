@@ -3,12 +3,31 @@ from rest_framework.response import Response
 # important one
 from rest_framework.decorators import api_view
 
-from news.models import Article
-from news.api.serializers import ArticleSerializer
+from news.models import Article, Reporter
+from news.api.serializers import ArticleSerializer, ReporterSerializer
 
 # Class views
 from rest_framework.views import APIView
 from rest_framework.generics import get_object_or_404
+
+
+class ReporterListCreateView(APIView):
+    # response to GET request
+    def get(self, request):
+        authors = Reporter.objects.all()
+        # Cause we manipulate endpoint of article details we need to add
+        # context = {'request':request} or else our serializer throw exception
+        serializer = ReporterSerializer(authors, many=True, context={'request':request})
+        return Response(serializer.data)
+
+    # response to POST request
+    def post(self, request):
+      serializer = ReporterSerializer(data=request.data)
+      if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status= status.HTTP_201_CREATED)
+      return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class ArticleListCreateView(APIView):
     # response to GET request
