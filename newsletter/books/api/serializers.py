@@ -4,9 +4,14 @@ from books.models import Book, Comment
 
 
 class CommentSerializer(serializers.ModelSerializer):
+  # burda read only true burda serializer'a sen karışma ben viewde
+  # bu yorum sahibini oluşturacağım
+  owner = serializers.StringRelatedField(read_only=True)
+
   class Meta:
     model = Comment
-    fields = '__all__'
+    # fields = '__all__'
+    exclude = ['book']
 
 class BookSerializer(serializers.ModelSerializer):
   # Burda many=True dememizin sebebi buraya 1den fazla yorum gelebilir
