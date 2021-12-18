@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'rest_framework',
     'news.apps.NewsConfig',
+    'books.apps.BooksConfig',
 ]
 
 MIDDLEWARE = [
