@@ -57,6 +57,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES': [
+#         # burda bizim application'a sadece login olmuş kişilere izin veriyoruz
+#         'rest_framework.permissions.IsAuthenticated',
+#     ]
+# }
+
 ROOT_URLCONF = 'newsletter.urls'
 
 TEMPLATES = [
