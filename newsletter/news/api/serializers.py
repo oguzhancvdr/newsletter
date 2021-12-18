@@ -72,9 +72,6 @@ class ReporterSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-
-
-
 # Standart Serializer
 class ArticleDefaultSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
