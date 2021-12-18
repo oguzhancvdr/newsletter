@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.contrib.auth.models import User
 
 class Book(models.Model):
   name = models.CharField(max_length=255, verbose_name=_('Name'))
@@ -16,7 +17,8 @@ class Book(models.Model):
 
 class Comment(models.Model):
   book = models.ForeignKey(Book, verbose_name=_('Book'), on_delete=models.CASCADE, related_name='comments')
-  owner = models.CharField(max_length=255, verbose_name=_('Owner'))
+  # owner = models.CharField(max_length=255, verbose_name=_('Owner'))
+  owner = models.ForeignKey(User, max_length=255, verbose_name=_('Owner'), on_delete=models.CASCADE)
   comment = models.TextField(blank=True, null=True, verbose_name=_('Comment'))
   rating = models.PositiveBigIntegerField(verbose_name=_('Rating'),
     validators=[MinValueValidator(1), MaxValueValidator(5)]
@@ -25,4 +27,4 @@ class Comment(models.Model):
   updated_at = models.DateTimeField(auto_now=True, verbose_name=_('Updated date'))
 
   def __str__(self):
-    return str(self.rating)
+    return f"{self.owner}-{str(self.rating)}"
