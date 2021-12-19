@@ -9,12 +9,14 @@ from rest_framework.exceptions import ValidationError
 from books.models import Book, Comment
 from books.api.serializers import BookSerializer, CommentSerializer
 from books.api.permissions import IsAdminUserOrReadOnly, IsCommentOwnerOrReadOnly
+from books.api.pagination import SmallPagination, LargePagination
 
 
 class BookListCreateAPIView(generics.ListCreateAPIView):
-  queryset = Book.objects.all()
+  queryset = Book.objects.all().order_by('-published_at')
   serializer_class = BookSerializer
   permission_classes = [IsAdminUserOrReadOnly]
+  # pagination_class = SmallPagination
 
 
 class BookDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
@@ -59,13 +61,6 @@ class CommentDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
   permission_classes = [IsCommentOwnerOrReadOnly]
 
   
-
-
-
-
-
-
-
 
 # ? with mixins
 """
