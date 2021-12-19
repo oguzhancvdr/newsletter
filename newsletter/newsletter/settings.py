@@ -64,6 +64,18 @@ MIDDLEWARE = [
 #     ]
 # }
 
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        # burda bizim application'a sadece login olmuş kişilere izin veriyoruz
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    # global pagination
+    # we can adjust our pagination as a global policy
+    'DEFAULT_PAGINATION_CLASS': 'books.api.pagination.LargePagination',
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    # 'PAGE_SIZE': 20,
+}
+
 ROOT_URLCONF = 'newsletter.urls'
 
 TEMPLATES = [
