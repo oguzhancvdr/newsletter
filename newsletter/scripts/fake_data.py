@@ -1,6 +1,8 @@
 import os
 import random
 
+from rest_framework import serializers
+
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'newsletter.settings')
 
 import django
@@ -9,9 +11,10 @@ django.setup()
 # ! sıralama çok önemli
 from django.contrib.auth.models import User
 from faker import Faker
+import requests
 
+fake = Faker(['en_US'])
 def set_user():
-    fake = Faker(['en_US'])
 
     f_name = fake.first_name()
     l_name = fake.last_name()
@@ -36,3 +39,36 @@ def set_user():
 
     user.set_password('testing123.')
     user.save()
+
+from pprint import pprint
+from books.api.serializers import BookSerializer
+
+
+def add_book(subject):
+    url = 'http://openlibrary.org/search.json'
+    payload = {'q': subject}
+    response = requests.get(url, params=payload)
+
+    if response.status_code != 200:
+        print('Opps!', response.status_code)
+        return
+
+    jsn = response.json()
+    books = jsn.get('docs')
+
+    for book in books:
+      book_name = book.get('title')
+      data = dict(
+        name = book_name,
+        author = book.get('author_name')[0],
+        description = book.get('title_suggest'),
+        published_at = fake.date_time_between(start_date="-10y", end_date="now", tzinfo=None),
+      )
+      # çekilen fake datayı db'ye serializer aracalığıyla kaydediyoruz
+      serializer = BookSerializer(data=data)
+      if serializer.is_valid():
+        serializer.save()
+        print(f'Named as {book_name} book was saved')
+      else:
+        continue
+      
