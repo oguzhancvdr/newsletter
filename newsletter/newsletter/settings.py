@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'news.apps.NewsConfig',
     'books.apps.BooksConfig',
+    'profiles.apps.ProfilesConfig', 
 ]
 
 MIDDLEWARE = [
@@ -153,7 +154,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+# url de media dosyalarının gözükcek hali => http://127.0.0.1:8000/media/avatar_user.jpg
 MEDIA_URL = '/media/'
+# yüklenen medya dosyaları olduğunda django uploads adında bir klasör oluşturcak
+# ve bu klasör altına resimleri dosyları kaydedecek
+MEDIA_ROOT = 'uploads'
 
 LOCALE_PATHS = (str(BASE_DIR / "locale/"), )
 # Default primary key field type
