@@ -23,7 +23,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('books.api.urls')),
     path('api/', include('news.api.urls')),
-    path('api-auth/', include('rest_framework.urls')),
+    path('api-auth/', include('rest_framework.urls')), # browsable api sayfası için
+    path('api/rest-auth/', include('rest_auth.urls')), # django-rest-auth ile gelen
 ]
 
 if settings.DEBUG:

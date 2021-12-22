@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth', # pip install django-rest-auth
     'news.apps.NewsConfig',
     'books.apps.BooksConfig',
     'profiles.apps.ProfilesConfig', 
@@ -58,17 +60,15 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_PERMISSION_CLASSES': [
-#         # burda bizim application'a sadece login olmuş kişilere izin veriyoruz
-#         'rest_framework.permissions.IsAuthenticated',
-#     ]
-# }
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         # burda bizim application'a sadece login olmuş kişilere izin veriyoruz
         'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication', # browsable api sayfamızda ihtiyac duyarız
+        'rest_framework.authentication.TokenAuthentication', # tokenlarla istek yapacağız
     ],
     # global pagination
     # we can adjust our pagination as a global policy
