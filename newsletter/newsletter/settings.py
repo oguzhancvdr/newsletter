@@ -41,10 +41,21 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+
+    # 3rd party
     'django_extensions',
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth', # pip install django-rest-auth
+    # registiration endpointlerimiz için aşağıdaki 4'lü
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount', # social login için bkz.
+    'rest_auth.registration', # bunu allauth'u ekledikten sonra yaptık
+    # çünkü rest_auth ile allauth çalışması için registiration yapmalıyız
+    
+    # created apps
     'news.apps.NewsConfig',
     'books.apps.BooksConfig',
     'profiles.apps.ProfilesConfig', 
@@ -109,6 +120,7 @@ DATABASES = {
 }
 
 
+
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
@@ -164,3 +176,9 @@ LOCALE_PATHS = (str(BASE_DIR / "locale/"), )
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Registiration için gerekli
+SITE_ID = 1
+
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_EMAIL_REQUIRED = (True)

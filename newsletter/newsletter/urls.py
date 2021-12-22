@@ -25,6 +25,7 @@ urlpatterns = [
     path('api/', include('news.api.urls')),
     path('api-auth/', include('rest_framework.urls')), # browsable api sayfası için
     path('api/rest-auth/', include('rest_auth.urls')), # django-rest-auth ile gelen
+    path('api/rest-auth/registration/', include('rest_auth.registration.urls')),
     path('api/', include('profiles.api.urls')), # django-rest-auth ile gelen
 ]
 
