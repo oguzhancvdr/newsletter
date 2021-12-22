@@ -7,7 +7,7 @@ def client():
       'username': 'aaron_harrison',
       'password': 'testing123.'
     }
-
+    # burada django-rest-auth'dan faydalandık '/api/rest-auth/login/'
     response = requests.post(url='http://127.0.0.1:8000/api/rest-auth/login/', data=credentials,)
     print('Status code: ', response.status_code)
     response_data = response.json()
