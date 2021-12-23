@@ -14,8 +14,9 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 
 class ProfileAvatarSerializer(serializers.ModelSerializer):
-    model = Profile
-    fields = ['avatar']
+    class Meta:
+        model = Profile
+        fields = ['avatar']
 
 
 class ProfileStatusSerializer(serializers.ModelSerializer):
