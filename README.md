@@ -1,2 +1,1 @@
-# newsletter app
-## Includes 3 different api endpoints
+## This repo includes 3 different api endpoints
