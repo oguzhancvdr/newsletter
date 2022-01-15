@@ -12,4 +12,4 @@ class ProfilesConfig(AppConfig):
     # signal dosyamızı direk import etmesini istiyoruz
 
     def ready(self):
-        import  profiles.signals
+        import profiles.signals

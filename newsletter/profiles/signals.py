@@ -23,4 +23,3 @@ def create_first_status_message(sender, instance, created, **kwargs):
             user_profile=instance,
             status_message=f'{instance.user.username} has been joined in the Ninja Club!'
         )
-
